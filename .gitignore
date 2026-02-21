@@ -1,0 +1,14 @@
+# Python Cache
+__pycache__/
+*.pyc
+
+# Virtual Environments (if you used one)
+venv/
+env/
+
+# SECURITY: Never commit private RSA keys!
+*.pem
+
+# Local Database & User Uploads
+uploads/
+database.db
