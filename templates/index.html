@@ -166,6 +166,14 @@
     <h2>1. Sign a Document</h2>
     <form action="/upload" method="POST" enctype="multipart/form-data">
       <div class="form-group">
+        <label>Signing as Role:</label>
+        <select name="role" style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 5px;">
+          <option value="Staff">Staff (Initiator)</option>
+          <option value="Manager">Manager (Reviewer)</option>
+          <option value="Director">Director (Final Approver)</option>
+        </select>
+      </div>
+      <div class="form-group">
         <label>Select Document to Sign:</label>
         <input type="file" name="file" required>
       </div>
@@ -192,20 +200,24 @@
         <tr>
           <th>Time (UTC)</th>
           <th>Filename</th>
+          <th>Role</th>
           <th>Action</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
         {% for log in logs %}
         <tr>
-          <td style="font-size: 13px; color: #666;">{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-          <td>{{ log.filename }}</td>
+          <td style="font-size: 11px; color: #666;">{{ log.timestamp.strftime('%H:%M:%S') }}</td>
+          <td style="font-size: 13px;">{{ log.filename }}</td>
+          <td><strong>{{ log.role }}</strong></td>
           <td>
             <span
-              class="{% if 'Signed' in log.action %}badge-signed{% elif 'Valid' in log.action %}badge-verified{% else %}badge-failed{% endif %}">
+              class="{% if 'Signed' in log.action %}badge-signed{% elif 'Verified' in log.action %}badge-verified{% else %}badge-failed{% endif %}">
               {{ log.action }}
             </span>
           </td>
+          <td style="font-size: 13px; font-style: italic;">{{ log.status }}</td>
         </tr>
         {% endfor %}
       </tbody>
